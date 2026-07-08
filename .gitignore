@@ -18,3 +18,10 @@ outputs/logs/
 # OS Files
 .DS_Store
 Thumbs.db
+
+# Build artifacts
+*.egg-info/
+
+# Python cache
+__pycache__/
+*.pyc

@@ -1,0 +1,5 @@
+CustomerID,Age,Income,Churn
+1,25,30000,Yes
+2,40,65000,No
+3,31,42000,Yes
+4,29,38000,No
