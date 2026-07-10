@@ -1,0 +1,87 @@
+from pathlib import Path
+
+from context.project_context import ProjectContext
+
+from services.dataset.dataset_service import DatasetService
+from services.dataset.metadata_service import MetadataService
+from services.dataset.data_quality_service import DataQualityService
+
+from services.understanding.dataset_understanding_service import (
+    DatasetUnderstandingService,
+)
+from services.understanding.target_identification_service import (
+    TargetIdentificationService,
+)
+
+from services.planning.analysis_planner import AnalysisPlanner
+
+
+class DataPilotWorkflow:
+    """
+    Coordinates the complete data science workflow.
+    """
+
+    def __init__(self):
+
+        self.dataset_service = DatasetService()
+
+        self.metadata_service = MetadataService()
+
+        self.data_quality_service = DataQualityService()
+
+        self.understanding_service = DatasetUnderstandingService()
+
+        self.target_service = TargetIdentificationService()
+
+        self.analysis_planner = AnalysisPlanner()
+
+    def run(
+        self,
+        dataset_path: Path,
+    ) -> ProjectContext:
+
+        # Load dataset
+        dataframe = self.dataset_service.load_dataset(
+            dataset_path,
+        )
+
+        # Metadata
+        dataset_info = self.metadata_service.extract(
+            dataframe=dataframe,
+            file_name=dataset_path.name,
+        )
+
+        # Data quality
+        data_quality = self.data_quality_service.analyze(
+            dataframe,
+        )
+
+        # Shared context
+        context = ProjectContext(
+            dataframe=dataframe,
+            dataset_info=dataset_info,
+            data_quality=data_quality,
+        )
+
+        # Dataset understanding
+        context.dataset_understanding = (
+            self.understanding_service.understand(
+                context,
+            )
+        )
+
+        # Target suggestion
+        context.target_suggestion = (
+            self.target_service.identify(
+                context,
+            )
+        )
+
+        # Analysis plan
+        context.analysis_plan = (
+            self.analysis_planner.create_plan(
+                context,
+            )
+        )
+
+        return context

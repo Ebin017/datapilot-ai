@@ -1,38 +1,40 @@
 from pathlib import Path
 
-from services.dataset.dataset_service import DatasetService
-from services.dataset.metadata_service import (
-    MetadataService,
-)
-from services.dataset.data_quality_service import DataQualityService
+from workflow.datapilot_workflow import DataPilotWorkflow
 
-def main() -> None:
-    dataset_service = DatasetService()
-    metadata_service = MetadataService()
-    data_quality_service = DataQualityService()
 
-    dataset_path = Path("data/customer_churn.csv")
+def main():
 
-    dataframe = dataset_service.load_dataset(dataset_path)
+    workflow = DataPilotWorkflow()
 
-    dataset_info = metadata_service.extract(
-        dataframe,
-        dataset_path.name,
+    context = workflow.run(
+        Path("data/customer_churn.csv"),
     )
-
-    data_quality = data_quality_service.analyze(dataframe)
 
     print("\nDataset Information")
     print("-" * 40)
-    print(dataset_info)
+    print(context.dataset_info)
 
     print("\nFirst Five Rows")
     print("-" * 40)
-    print(dataframe.head())
+    print(context.dataframe.head())
 
     print("\nData Quality")
     print("-" * 40)
-    print(data_quality)
+    print(context.data_quality)
+
+    print("\nDataset Understanding")
+    print("-" * 40)
+    print(context.dataset_understanding)
+
+    print("\nTarget Suggestion")
+    print("-" * 40)
+    print(context.target_suggestion)
+
+    print("\nAnalysis Plan")
+    print("-" * 40)
+    print(context.analysis_plan)
+
 
 if __name__ == "__main__":
     main()
