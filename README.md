@@ -31,3 +31,17 @@ Instead of manually performing data cleaning, exploratory data analysis, model s
 - SHAP
 - Plotly
 - Streamlit
+
+## Current Features
+
+- ✅ Load CSV datasets
+- ✅ Extract dataset metadata
+- ✅ Analyze data quality
+- ✅ Build dataset understanding
+- ✅ Identify prediction target
+- ✅ Generate analysis plan
+- ✅ End-to-end workflow orchestration
+
+## Next Milestone
+
+- 🚧 CrewAI + Gemini integration

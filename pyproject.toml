@@ -11,6 +11,8 @@ requires-python = ">=3.11"
 dependencies = [
     "pandas",
     "pydantic",
+    "google-genai",
+    "python-dotenv",
 ]
 
 [tool.setuptools.packages.find]

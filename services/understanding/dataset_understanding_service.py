@@ -1,79 +1,94 @@
+from clients.llm.gemini_client import GeminiClient
 from context.project_context import ProjectContext
 from models.dataset_understanding import DatasetUnderstanding
 from models.enums.problem_type import ProblemType
+from prompts.templates.dataset_understanding_prompt import (
+    build_dataset_understanding_prompt,
+)
+from pydantic import ValidationError
 
 
 class DatasetUnderstandingService:
     """
-    Creates a high-level understanding of the dataset.
+    Creates a high-level understanding of a dataset using Gemini.
     """
+
+    def __init__(self):
+        self.gemini_client = GeminiClient()
 
     def understand(
         self,
         context: ProjectContext,
     ) -> DatasetUnderstanding:
 
-        observations: list[str] = []
+        prompt = build_dataset_understanding_prompt(context)
 
-        dataset_info = context.dataset_info
-        data_quality = context.data_quality
+        response = self.gemini_client.generate(prompt)
 
-        # Feature types
-        if (
-            dataset_info.numeric_columns
-            and dataset_info.categorical_columns
-        ):
-            observations.append(
-                "The dataset contains both numeric and categorical features."
-            )
+        try:
+            return DatasetUnderstanding.model_validate_json(response)
 
-        elif dataset_info.numeric_columns:
-            observations.append(
-                "The dataset contains only numeric features."
-            )
+        except ValidationError as e:
+            raise ValueError(
+                "Failed to parse Gemini response."
+            ) from e
+        
 
-        elif dataset_info.categorical_columns:
-            observations.append(
-                "The dataset contains only categorical features."
-            )
 
-        # Missing values
-        total_missing = sum(data_quality.missing_values.values())
+#     def _build_prompt(
+#         self,
+#         context: ProjectContext,
+#     ) -> str:
+#         """
+#         Build a prompt describing the dataset.
+#         """
 
-        if total_missing == 0:
-            observations.append(
-                "No missing values were detected."
-            )
-        else:
-            observations.append(
-                f"The dataset contains {total_missing} missing values."
-            )
+#         dataset_info = context.dataset_info
+#         data_quality = context.data_quality
 
-        # Duplicate rows
-        if data_quality.duplicate_rows == 0:
-            observations.append(
-                "No duplicate rows were found."
-            )
-        else:
-            observations.append(
-                f"The dataset contains {data_quality.duplicate_rows} duplicate rows."
-            )
+#         total_missing = sum(data_quality.missing_values.values())
 
-        # Ready for modelling
-        if (
-            total_missing == 0
-            and data_quality.duplicate_rows == 0
-        ):
-            observations.append(
-                "The dataset appears ready for modeling."
-            )
+#         prompt = f"""
+# You are an experienced Data Scientist.
 
-        return DatasetUnderstanding(
-            summary=(
-                f"The dataset contains "
-                f"{dataset_info.rows:,} rows and "
-                f"{dataset_info.columns} columns."
-            ),
-            likely_problem_type=ProblemType.CLASSIFICATION,
-            observations=observations,
-        )
+# Analyze the following dataset metadata.
+
+# Dataset Information
+
+# File Name:
+# {dataset_info.file_name}
+
+# Rows:
+# {dataset_info.rows}
+
+# Columns:
+# {dataset_info.columns}
+
+# Numeric Columns:
+# {", ".join(dataset_info.numeric_columns)}
+
+# Categorical Columns:
+# {", ".join(dataset_info.categorical_columns)}
+
+# Data Types:
+# {dataset_info.data_types}
+
+# Data Quality
+
+# Missing Values:
+# {total_missing}
+
+# Duplicate Rows:
+# {data_quality.duplicate_rows}
+
+# Your task:
+
+# 1. Write a short summary of the dataset.
+# 2. List 4 important observations.
+# 3. Suggest whether this is likely a classification or regression problem.
+# 4. Explain your reasoning.
+
+# Keep the response concise.
+# """
+
+#         return prompt.strip()

@@ -84,3 +84,17 @@
 ## Learned
 
 - User choices (like the target column) are not metadata.
+
+## Learned
+
+- Workflows coordinate services.
+- Services should have a single public responsibility.
+- ProjectContext evolves as the workflow progresses.
+- Separate orchestration from business logic.
+
+## Questions
+
+- How should we integrate CrewAI without changing the workflow?
+- When should dependency injection be introduced?
+
+- Run project examples using `python -m <module>` instead of executing files directly to ensure package imports work correctly.
