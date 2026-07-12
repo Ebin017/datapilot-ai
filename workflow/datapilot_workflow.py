@@ -9,12 +9,13 @@ from services.dataset.data_quality_service import DataQualityService
 from services.understanding.dataset_understanding_service import (
     DatasetUnderstandingService,
 )
-from services.understanding.target_identification_service import (
-    TargetIdentificationService,
+from services.understanding.ai_target_identification_service import (
+    AITargetIdentificationService,
 )
 
-from services.planning.analysis_planner import AnalysisPlanner
+from services.planning.ai_analysis_planner import AIAnalysisPlanner
 
+from services.execution.eda.exploratory_data_analysis_service import ExploratoryDataAnalysisService
 
 class DataPilotWorkflow:
     """
@@ -31,9 +32,11 @@ class DataPilotWorkflow:
 
         self.understanding_service = DatasetUnderstandingService()
 
-        self.target_service = TargetIdentificationService()
+        self.target_service = AITargetIdentificationService()
 
-        self.analysis_planner = AnalysisPlanner()
+        self.analysis_planner = AIAnalysisPlanner()
+
+        self.eda_service = ExploratoryDataAnalysisService()
 
     def run(
         self,
@@ -83,5 +86,8 @@ class DataPilotWorkflow:
                 context,
             )
         )
+
+        # eda
+        context.eda_result = self.eda_service.analyze(context)
 
         return context

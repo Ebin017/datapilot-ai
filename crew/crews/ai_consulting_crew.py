@@ -1,0 +1,2 @@
+class AIConsultingCrew:
+    pass

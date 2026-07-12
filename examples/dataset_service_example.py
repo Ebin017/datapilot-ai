@@ -35,6 +35,10 @@ def main():
     print("-" * 40)
     print(context.analysis_plan)
 
+    print("\nEDA")
+    print("-" * 40)
+    print(context.eda_result)
+
 
 if __name__ == "__main__":
     main()

@@ -7,6 +7,7 @@ from models.data_quality_result import DataQualityResult
 from models.dataset_info import DatasetInfo
 from models.dataset_understanding import DatasetUnderstanding
 from models.target_suggestion import TargetSuggestion
+from models.eda_result import EDAResult
 
 
 @dataclass
@@ -26,3 +27,5 @@ class ProjectContext:
     target_suggestion: TargetSuggestion | None = None
 
     analysis_plan: AnalysisPlan | None = None
+
+    eda_result: EDAResult | None = None

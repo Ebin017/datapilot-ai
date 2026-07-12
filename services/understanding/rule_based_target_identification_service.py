@@ -3,7 +3,7 @@ from models.enums.problem_type import ProblemType
 from models.target_suggestion import TargetSuggestion
 
 
-class TargetIdentificationService:
+class RuleBasedTargetIdentificationService:
     """
     Identifies the most likely prediction target column.
     """

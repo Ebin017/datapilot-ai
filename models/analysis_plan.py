@@ -5,7 +5,7 @@ from models.enums.problem_type import ProblemType
 
 class AnalysisPlan(BaseModel):
     """
-    Defines how the dataset should be analyzed.
+    Stores the execution plan for a machine learning workflow.
     """
 
     target_column: str
@@ -20,4 +20,14 @@ class AnalysisPlan(BaseModel):
 
     stratify_split: bool
 
-    preprocessing_steps: list[str]
+    columns_to_drop: list[str]
+
+    numerical_features: list[str]
+
+    categorical_features: list[str]
+
+    scaling_method: str | None = None
+
+    feature_encoding: str | None
+
+    target_encoding: str | None

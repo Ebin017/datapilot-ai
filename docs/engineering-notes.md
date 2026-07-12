@@ -98,3 +98,14 @@
 - When should dependency injection be introduced?
 
 - Run project examples using `python -m <module>` instead of executing files directly to ensure package imports work correctly.
+
+## Learned
+
+- LLM prompts should request structured JSON instead of free-form text.
+- Pydantic can validate JSON responses directly using `model_validate_json()`.
+- Running examples with `python -m` avoids package import issues.
+
+## Questions
+
+- How should AI responses be handled when JSON validation fails?
+- When should prompt templates be shared across multiple AI services?
