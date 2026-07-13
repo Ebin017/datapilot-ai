@@ -39,6 +39,18 @@ def main():
     print("-" * 40)
     print(context.eda_result)
 
+    print("\nFeature Engineering")
+    print("-" * 40)
+
+    print("Features")
+    print(context.feature_engineering_result.features)
+
+    print("\nTarget")
+    print(context.feature_engineering_result.target)
+
+    print("\nFeature Names")
+    print(context.feature_engineering_result.feature_names)
+
 
 if __name__ == "__main__":
     main()

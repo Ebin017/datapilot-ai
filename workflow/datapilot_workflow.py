@@ -17,6 +17,10 @@ from services.planning.ai_analysis_planner import AIAnalysisPlanner
 
 from services.execution.eda.exploratory_data_analysis_service import ExploratoryDataAnalysisService
 
+from services.execution.feature_engineering.feature_engineering_service import (
+    FeatureEngineeringService,
+)
+
 class DataPilotWorkflow:
     """
     Coordinates the complete data science workflow.
@@ -37,6 +41,8 @@ class DataPilotWorkflow:
         self.analysis_planner = AIAnalysisPlanner()
 
         self.eda_service = ExploratoryDataAnalysisService()
+
+        self.feature_engineering_service = FeatureEngineeringService()
 
     def run(
         self,
@@ -89,5 +95,12 @@ class DataPilotWorkflow:
 
         # eda
         context.eda_result = self.eda_service.analyze(context)
+
+        # feature engineering
+        context.feature_engineering_result = (
+            self.feature_engineering_service.transform(
+                context,
+            )
+        )
 
         return context
