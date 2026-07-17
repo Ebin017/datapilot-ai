@@ -53,26 +53,42 @@ Return a machine-executable plan. Do not describe the steps in natural language.
 
 Do not omit any field, even if its value is null.
 
+Recommend 2-3 candidate models appropriate for the dataset. Do not recommend deep learning models unless the dataset characteristics justify them.
+
 Return exactly this schema:
 
 {{
-    "target_column": "string",
-    "problem_type": "classification or regression",
-    "evaluation_metric": "string",
-    "train_test_split": 0.2,
-    "random_state": 42,
-    "stratify_split": true,
-    "columns_to_drop": [
-        "CustomerID"
-    ],
-    "numerical_features": [
-        "Age",
-        "Income"
-    ],
-    "categorical_features": [],
-    "scaling_method": "standard",
-    "feature_encoding": null,
-    "target_encoding": "label"
+  "target_column": "string",
+  "problem_type": "classification",
+  "evaluation_metric": "f1_score",
+  "train_test_split": 0.2,
+  "random_state": 42,
+  "stratify_split": true,
+  "columns_to_drop": [
+    "CustomerID"
+  ],
+  "numerical_features": [
+    "Age",
+    "Income"
+  ],
+  "categorical_features": [],
+  "scaling_method": "standard",
+  "feature_encoding": null,
+  "target_encoding": "label",
+  "candidate_models": [
+    {{
+      "name": "logistic_regression",
+      "reason": "Good baseline for binary classification."
+    }},
+    {{
+      "name": "random_forest",
+      "reason": "Handles nonlinear relationships."
+    }},
+    {{
+      "name": "xgboost",
+      "reason": "Strong performer on tabular datasets."
+    }}
+  ]
 }}
 
 """.strip()

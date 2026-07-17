@@ -13,7 +13,8 @@ dependencies = [
     "pydantic",
     "google-genai",
     "python-dotenv",
-    "scikit-learn" = "^1.9.0"
+    "scikit-learn" = "^1.9.0",
+    "ollama = "^0.6.2",
 ]
 
 [tool.setuptools.packages.find]

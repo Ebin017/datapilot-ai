@@ -1,6 +1,7 @@
 from pydantic import BaseModel
 
 from models.enums.problem_type import ProblemType
+from models import CandidateModel
 
 
 class AnalysisPlan(BaseModel):
@@ -31,3 +32,5 @@ class AnalysisPlan(BaseModel):
     feature_encoding: str | None
 
     target_encoding: str | None
+
+    candidate_models: list[CandidateModel]

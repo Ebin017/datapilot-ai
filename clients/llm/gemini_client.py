@@ -3,7 +3,7 @@ from google import genai
 from config.settings import Settings
 
 
-class GeminiClient:
+class GeminiClient():
     """
     Client for communicating with Google's Gemini models.
     """
