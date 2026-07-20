@@ -55,6 +55,16 @@ def main():
     print("-" * 40)
     print(context.model_training_result)
 
+    print()
+
+    print("Model Evaluation")
+    print("-" * 40)
+
+    print(
+        context.model_evaluation_result,
+    )
+    
+
 
 if __name__ == "__main__":
     main()
