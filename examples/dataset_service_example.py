@@ -8,7 +8,7 @@ def main():
     workflow = DataPilotWorkflow()
 
     context = workflow.run(
-        Path("data/customer_churn.csv"),
+        Path("data/employee_attrition.csv"),
     )
 
     print("\nDataset Information")
@@ -50,6 +50,10 @@ def main():
 
     print("\nFeature Names")
     print(context.feature_engineering_result.feature_names)
+
+    print("\nModel Training")
+    print("-" * 40)
+    print(context.model_training_result)
 
 
 if __name__ == "__main__":

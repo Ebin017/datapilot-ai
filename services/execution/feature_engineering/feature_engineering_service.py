@@ -33,13 +33,16 @@ class FeatureEngineeringService:
 
         dataframe = context.dataframe.copy()
 
+        plan = context.analysis_plan
+        dataset_info = context.dataset_info
+
         # Drop excluded columns
         dataframe = dataframe.drop(
-            columns=context.analysis_plan.columns_to_drop,
+            columns=plan.columns_to_drop,
             errors="ignore",
         )
 
-        target_column = context.analysis_plan.target_column
+        target_column = plan.target_column
 
         # Separate target
         target = dataframe[target_column]
@@ -49,22 +52,55 @@ class FeatureEngineeringService:
             columns=[target_column],
         )
 
+        # -----------------------------
+        # Determine feature columns
+        # -----------------------------
+
+        categorical_features = [
+            column
+            for column in dataset_info.categorical_columns
+            if column != target_column
+            and column not in plan.columns_to_drop
+        ]
+
+        numerical_features = [
+            column
+            for column in dataset_info.numeric_columns
+            if column != target_column
+            and column not in plan.columns_to_drop
+        ]
+
+        # -----------------------------
         # Encode target
-        if context.analysis_plan.target_encoding == "label":
+        # -----------------------------
+
+        if plan.target_encoding == "label":
             target = self.label_encoder.transform(target)
 
+        # -----------------------------
         # Encode categorical features
-        if context.analysis_plan.feature_encoding == "one_hot":
+        # -----------------------------
+
+        if (
+            plan.feature_encoding == "one_hot"
+            and categorical_features
+        ):
             features = self.one_hot_encoder.transform(
                 features,
-                context.analysis_plan.categorical_features,
+                categorical_features,
             )
 
+        # -----------------------------
         # Scale numerical features
-        if context.analysis_plan.scaling_method == "standard":
+        # -----------------------------
+
+        if (
+            plan.scaling_method == "standard"
+            and numerical_features
+        ):
             features = self.scaler.transform(
                 features,
-                context.analysis_plan.numerical_features,
+                numerical_features,
             )
 
         return FeatureEngineeringResult(

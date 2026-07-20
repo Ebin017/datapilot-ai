@@ -21,6 +21,10 @@ from services.execution.feature_engineering.feature_engineering_service import (
     FeatureEngineeringService,
 )
 
+from services.training.model_training_service import (
+    ModelTrainingService,
+)
+
 class DataPilotWorkflow:
     """
     Coordinates the complete data science workflow.
@@ -43,6 +47,8 @@ class DataPilotWorkflow:
         self.eda_service = ExploratoryDataAnalysisService()
 
         self.feature_engineering_service = FeatureEngineeringService()
+
+        self.model_training_service = ModelTrainingService()
 
     def run(
         self,
@@ -99,6 +105,13 @@ class DataPilotWorkflow:
         # feature engineering
         context.feature_engineering_result = (
             self.feature_engineering_service.transform(
+                context,
+            )
+        )
+
+        # training
+        context.model_training_result = (
+            self.model_training_service.train(
                 context,
             )
         )

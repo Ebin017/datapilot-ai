@@ -9,6 +9,7 @@ from models.dataset_understanding import DatasetUnderstanding
 from models.target_suggestion import TargetSuggestion
 from models.eda_result import EDAResult
 from models import FeatureEngineeringResult
+from models import ModelTrainingResult
 
 
 @dataclass
@@ -32,3 +33,5 @@ class ProjectContext:
     eda_result: EDAResult | None = None
 
     feature_engineering_result: FeatureEngineeringResult | None = None
+
+    model_training_result: ModelTrainingResult | None = None
