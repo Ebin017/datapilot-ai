@@ -63,7 +63,16 @@ def main():
     print(
         context.model_evaluation_result,
     )
-    
+
+    print("\nExplainability")
+    print("-" * 40)
+
+    for feature, score in (
+        context.explainability_result
+        .feature_importance
+        .items()
+    ):
+        print(f"{feature}: {score:.4f}")
 
 
 if __name__ == "__main__":

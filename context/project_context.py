@@ -11,6 +11,7 @@ from models.eda_result import EDAResult
 from models import FeatureEngineeringResult
 from models import ModelTrainingResult
 from models import ModelEvaluationResult
+from models import ExplainabilityResult
 
 
 @dataclass
@@ -38,3 +39,5 @@ class ProjectContext:
     model_training_result: ModelTrainingResult | None = None
 
     model_evaluation_result: ModelEvaluationResult | None = None
+
+    explainability_result: ExplainabilityResult | None = None
