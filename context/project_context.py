@@ -12,6 +12,7 @@ from models import FeatureEngineeringResult
 from models import ModelTrainingResult
 from models import ModelEvaluationResult
 from models import ExplainabilityResult
+from models import BusinessInsightResult
 
 
 @dataclass
@@ -41,3 +42,5 @@ class ProjectContext:
     model_evaluation_result: ModelEvaluationResult | None = None
 
     explainability_result: ExplainabilityResult | None = None
+
+    business_insight_result: BusinessInsightResult | None = None

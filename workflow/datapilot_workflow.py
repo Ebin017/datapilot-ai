@@ -28,6 +28,9 @@ from services.training.model_training_service import (
 from services.evaluation.model_evaluation_service import ModelEvaluationService
 
 from services.explainability.explainability_service import ExplainabilityService
+
+from services.business_insight.business_insight_service import BusinessInsightService
+
 class DataPilotWorkflow:
     """
     Coordinates the complete data science workflow.
@@ -56,6 +59,8 @@ class DataPilotWorkflow:
         self.model_evaluation_service = ModelEvaluationService()
 
         self.explainability_service = ExplainabilityService()
+
+        self.business_insight_service = BusinessInsightService()
 
     def run(
         self,
@@ -133,6 +138,13 @@ class DataPilotWorkflow:
         # explainabiliy
         context.explainability_result = (
             self.explainability_service.explain(
+                context,
+            )
+        )
+
+        # business insight
+        context.business_insight_result = (
+            self.business_insight_service.generate(
                 context,
             )
         )

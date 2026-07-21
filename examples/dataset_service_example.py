@@ -73,6 +73,36 @@ def main():
         .items()
     ):
         print(f"{feature}: {score:.4f}")
+    
+    result = context.business_insight_result
+
+    print("\nAI Business Insights")
+    print("-" * 40)
+
+    print("\nExecutive Summary")
+    print(result.executive_summary)
+
+    print("\nKey Findings")
+    for finding in result.key_findings:
+        print(f"• {finding}")
+
+    print("\nModel Performance")
+    print(result.model_performance_summary)
+
+    print("\nFeature Importance")
+    print(result.feature_importance_summary)
+
+    print("\nBusiness Recommendations")
+    for recommendation in result.business_recommendations:
+        print(f"• {recommendation}")
+
+    print("\nRisks & Limitations")
+    for risk in result.risks_and_limitations:
+        print(f"• {risk}")
+
+    print("\nNext Steps")
+    for step in result.next_steps:
+        print(f"• {step}")
 
 
 if __name__ == "__main__":
