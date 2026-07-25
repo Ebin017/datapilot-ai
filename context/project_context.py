@@ -13,6 +13,7 @@ from models import ModelTrainingResult
 from models import ModelEvaluationResult
 from models import ExplainabilityResult
 from models import BusinessInsightResult
+from models.data_cleaning_result import DataCleaningResult
 
 
 @dataclass
@@ -44,3 +45,5 @@ class ProjectContext:
     explainability_result: ExplainabilityResult | None = None
 
     business_insight_result: BusinessInsightResult | None = None
+
+    data_cleaning_result: DataCleaningResult | None = None

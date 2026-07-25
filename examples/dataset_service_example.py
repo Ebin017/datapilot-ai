@@ -23,6 +23,10 @@ def main():
     print("-" * 40)
     print(context.data_quality)
 
+    print("\nCleaning Result")
+    print("-" * 40)
+    print(context.data_cleaning_result)
+
     print("\nDataset Understanding")
     print("-" * 40)
     print(context.dataset_understanding)

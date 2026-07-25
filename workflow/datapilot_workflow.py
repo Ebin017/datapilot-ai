@@ -31,6 +31,12 @@ from services.explainability.explainability_service import ExplainabilityService
 
 from services.business_insight.business_insight_service import BusinessInsightService
 
+from services.cleaning.cleaning_strategy_service import (CleaningStrategyService,)
+
+from services.cleaning.data_cleaning_service import (
+    DataCleaningService,
+)
+
 class DataPilotWorkflow:
     """
     Coordinates the complete data science workflow.
@@ -62,6 +68,10 @@ class DataPilotWorkflow:
 
         self.business_insight_service = BusinessInsightService()
 
+        self.cleaning_strategy_service = CleaningStrategyService()
+
+        self.data_cleaning_service = DataCleaningService()
+
     def run(
         self,
         dataset_path: Path,
@@ -88,6 +98,21 @@ class DataPilotWorkflow:
             dataframe=dataframe,
             dataset_info=dataset_info,
             data_quality=data_quality,
+        )
+
+        # Cleaning Strategy
+        cleaning_plan = (
+            self.cleaning_strategy_service.generate_plan(
+                context,
+            )
+        )
+
+        # Data Cleaning
+        context.data_cleaning_result = (
+            self.data_cleaning_service.clean(
+                context,
+                cleaning_plan,
+            )
         )
 
         # Dataset understanding
