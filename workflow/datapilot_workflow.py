@@ -37,6 +37,10 @@ from services.cleaning.data_cleaning_service import (
     DataCleaningService,
 )
 
+from services.eda_visualization.eda_visualization_service import (
+    EDAVisualizationService,
+)
+
 class DataPilotWorkflow:
     """
     Coordinates the complete data science workflow.
@@ -71,6 +75,8 @@ class DataPilotWorkflow:
         self.cleaning_strategy_service = CleaningStrategyService()
 
         self.data_cleaning_service = DataCleaningService()
+
+        self.eda_visualization_service = EDAVisualizationService()
 
     def run(
         self,
@@ -138,6 +144,13 @@ class DataPilotWorkflow:
 
         # eda
         context.eda_result = self.eda_service.analyze(context)
+
+        # eda visualization
+        context.eda_visualization_result = (
+            self.eda_visualization_service.generate(
+                context,
+            )
+        )
 
         # feature engineering
         context.feature_engineering_result = (

@@ -14,6 +14,8 @@ from models import ModelEvaluationResult
 from models import ExplainabilityResult
 from models import BusinessInsightResult
 from models.data_cleaning_result import DataCleaningResult
+from models.eda_visualization import EDAVisualizationResult
+
 
 
 @dataclass
@@ -47,3 +49,7 @@ class ProjectContext:
     business_insight_result: BusinessInsightResult | None = None
 
     data_cleaning_result: DataCleaningResult | None = None
+
+    eda_visualization_result: EDAVisualizationResult | None = None
+
+    

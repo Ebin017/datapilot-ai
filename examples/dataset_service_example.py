@@ -108,6 +108,11 @@ def main():
     for step in result.next_steps:
         print(f"• {step}")
 
+    print("\nGenerated Charts")
+
+    for chart in context.eda_visualization_result.chart_paths:
+        print(chart)
+
 
 if __name__ == "__main__":
     main()

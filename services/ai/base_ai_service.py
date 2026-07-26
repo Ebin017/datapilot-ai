@@ -58,6 +58,11 @@ class BaseAIService:
             response,
         )
 
+        print("\n========== RAW LLM RESPONSE ==========")
+        print(response)
+        print("======================================\n")
+
+
         try:
             return response_model.model_validate_json(
                 response,
