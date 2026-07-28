@@ -15,6 +15,7 @@ from models import ExplainabilityResult
 from models import BusinessInsightResult
 from models.data_cleaning_result import DataCleaningResult
 from models.eda_visualization import EDAVisualizationResult
+from models.cleaning_plan import CleaningPlan
 
 
 
@@ -26,9 +27,9 @@ class ProjectContext:
 
     dataframe: pd.DataFrame
 
-    dataset_info: DatasetInfo
+    dataset_info: DatasetInfo | None = None
 
-    data_quality: DataQualityResult
+    data_quality: DataQualityResult | None = None
 
     dataset_understanding: DatasetUnderstanding | None = None
 
@@ -47,6 +48,8 @@ class ProjectContext:
     explainability_result: ExplainabilityResult | None = None
 
     business_insight_result: BusinessInsightResult | None = None
+
+    cleaning_plan: CleaningPlan | None = None
 
     data_cleaning_result: DataCleaningResult | None = None
 

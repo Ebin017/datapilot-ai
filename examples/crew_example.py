@@ -1,30 +1,13 @@
-from crew.ai_consulting_crew import AIConsultingCrew
+from crew.crews.datapilot_crew import (
+    create_datapilot_crew,
+)
 
+crew = create_datapilot_crew()
 
-def main():
+result = crew.kickoff(
+    inputs={
+        "dataset_path": "datasets/employee_attrition.csv",
+    }
+)
 
-    prompt = """
-Return JSON:
-
-{
-    "summary":"Test",
-    "likely_problem_type":"classification",
-    "observations":[
-        "one",
-        "two",
-        "three"
-    ]
-}
-"""
-
-    crew = AIConsultingCrew()
-
-    result = crew.understand_dataset(
-        prompt,
-    )
-
-    print(result)
-
-
-if __name__ == "__main__":
-    main()
+print(result)

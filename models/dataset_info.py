@@ -18,6 +18,10 @@ class DatasetInfo(BaseModel):
     categorical_columns: list[str] | None = None
     datetime_columns: list[str] | None = None
 
+    missing_values: dict[str, int] | None = None
+
+    duplicate_rows: int | None = None
+
     memory_usage_mb: float | None = None
 
     created_at: datetime = Field(default_factory=datetime.now)
