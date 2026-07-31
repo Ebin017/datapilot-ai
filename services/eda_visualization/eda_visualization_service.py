@@ -267,6 +267,7 @@ class EDAVisualizationService:
         """
 
         chart_paths: list[str] = []
+        
 
         categorical_columns = [
             column
