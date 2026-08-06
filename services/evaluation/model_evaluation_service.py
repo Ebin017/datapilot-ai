@@ -23,9 +23,7 @@ class ModelEvaluationService:
 
         training = context.model_training_result
 
-        model = training.trained_models[
-            training.best_model_name
-        ]
+        model = training.best_model
 
         predictions = model.predict(
             training.x_test,

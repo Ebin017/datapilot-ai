@@ -58,14 +58,14 @@ class FeatureEngineeringService:
 
         categorical_features = [
             column
-            for column in dataset_info.categorical_columns
+            for column in plan.categorical_features
             if column != target_column
             and column not in plan.columns_to_drop
         ]
 
         numerical_features = [
             column
-            for column in dataset_info.numeric_columns
+            for column in plan.numerical_features
             if column != target_column
             and column not in plan.columns_to_drop
         ]

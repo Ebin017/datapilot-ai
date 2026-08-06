@@ -15,6 +15,8 @@ class ModelTrainingResult(BaseModel):
 
     best_model_name: str
 
+    best_model: Any
+
     best_score: float
 
     x_train: Any
