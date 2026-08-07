@@ -35,12 +35,16 @@ from crew.tools.model_evaluation_tool import (
 )
 
 
+# --------------------------------------------------
+# Run complete pipeline
+# --------------------------------------------------
+
 DatasetTool().run(
     dataset_path="datasets/employee_attrition.csv",
 )
 
 MetadataTool().run(
-    file_name="datasets/employee_attrition.csv",
+    file_name="employee_attrition.csv",
 )
 
 DataQualityTool().run()
@@ -67,6 +71,10 @@ result = ModelEvaluationTool().run()
 
 print(result)
 
+# --------------------------------------------------
+# Display results
+# --------------------------------------------------
+
 print("\n" + "=" * 60)
 print("MODEL EVALUATION")
 print("=" * 60)
@@ -75,26 +83,35 @@ context = ProjectContextManager.get_context()
 
 evaluation = context.model_evaluation_result
 
-print(f"\nAccuracy: {evaluation.accuracy:.4f}")
-print(f"Precision: {evaluation.precision:.4f}")
-print(f"Recall: {evaluation.recall:.4f}")
-print(f"F1 Score: {evaluation.f1_score:.4f}")
+print("\nEvaluation Metrics:\n")
 
-print("\nConfusion Matrix:")
+for metric, value in evaluation.metrics.items():
+    print(f"{metric}: {value:.4f}")
 
-for row in evaluation.confusion_matrix:
-    print(row)
+# --------------------------------------------------
+# Classification only
+# --------------------------------------------------
 
-print("\nClassification Report:")
+if evaluation.confusion_matrix is not None:
 
-for label, metrics in evaluation.classification_report.items():
+    print("\nConfusion Matrix:")
 
-    print(f"\n{label}")
+    for row in evaluation.confusion_matrix:
+        print(row)
 
-    if isinstance(metrics, dict):
+if evaluation.classification_report is not None:
 
-        for metric, value in metrics.items():
-            print(f"  {metric}: {value:.4f}")
+    print("\nClassification Report:")
 
-    else:
-        print(metrics)
+    for label, metrics in evaluation.classification_report.items():
+
+        print(f"\n{label}")
+
+        if isinstance(metrics, dict):
+
+            for metric, value in metrics.items():
+                print(f"  {metric}: {value:.4f}")
+
+        else:
+
+            print(metrics)

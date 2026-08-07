@@ -38,10 +38,12 @@ class ModelEvaluationTool(BaseTool):
 
         result = context.model_evaluation_result
 
+        metrics_text = "\n".join(
+            f"{metric}: {value:.4f}"
+            for metric, value in result.metrics.items()
+        )
+
         return (
             "Model evaluation completed successfully.\n"
-            f"Accuracy: {result.accuracy:.4f}\n"
-            f"Precision: {result.precision:.4f}\n"
-            f"Recall: {result.recall:.4f}\n"
-            f"F1 Score: {result.f1_score:.4f}"
+            f"{metrics_text}"
         )

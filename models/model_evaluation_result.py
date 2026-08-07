@@ -6,14 +6,8 @@ class ModelEvaluationResult(BaseModel):
     Stores model evaluation metrics.
     """
 
-    accuracy: float
+    metrics: dict[str, float]
 
-    precision: float
+    confusion_matrix: list[list[int]] | None = None
 
-    recall: float
-
-    f1_score: float
-
-    confusion_matrix: list[list[int]]
-
-    classification_report: dict
+    classification_report: dict | None = None

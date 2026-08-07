@@ -1,19 +1,14 @@
-from sklearn.metrics import (
-    accuracy_score,
-    classification_report,
-    confusion_matrix,
-    f1_score,
-    precision_score,
-    recall_score,
-)
-
 from context.project_context import ProjectContext
 from models import ModelEvaluationResult
+
+from services.evaluation.evaluation_factory import (
+    EvaluationFactory,
+)
 
 
 class ModelEvaluationService:
     """
-    Evaluates the best trained model.
+    Evaluates the best trained machine learning model.
     """
 
     def evaluate(
@@ -23,36 +18,12 @@ class ModelEvaluationService:
 
         training = context.model_training_result
 
-        model = training.best_model
-
-        predictions = model.predict(
-            training.x_test,
+        evaluator = EvaluationFactory.create(
+            context.analysis_plan.problem_type,
         )
 
-        return ModelEvaluationResult(
-            accuracy=accuracy_score(
-                training.y_test,
-                predictions,
-            ),
-            precision=precision_score(
-                training.y_test,
-                predictions,
-            ),
-            recall=recall_score(
-                training.y_test,
-                predictions,
-            ),
-            f1_score=f1_score(
-                training.y_test,
-                predictions,
-            ),
-            confusion_matrix=confusion_matrix(
-                training.y_test,
-                predictions,
-            ).tolist(),
-            classification_report=classification_report(
-                training.y_test,
-                predictions,
-                output_dict=True,
-            ),
+        return evaluator.evaluate(
+            model=training.best_model,
+            x_test=training.x_test,
+            y_test=training.y_test,
         )
