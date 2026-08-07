@@ -19,9 +19,9 @@ Model Evaluation
 ----------------
 {evaluation}
 
-Top SHAP Features
+Explainability
 -----------------
-{top_features}
+{explainability}
 
 Your task is to explain these results to business stakeholders.
 

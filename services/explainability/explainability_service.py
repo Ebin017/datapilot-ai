@@ -17,9 +17,7 @@ class ExplainabilityService:
 
         training = context.model_training_result
 
-        model = training.trained_models[
-            training.best_model_name
-        ]
+        model = training.best_model
 
         x_train = training.x_train
         x_test = training.x_test
@@ -73,7 +71,7 @@ class ExplainabilityService:
         feature_importance = dict(
             sorted(
                 zip(
-                    x_train.columns,
+                    x_test.columns,
                     importance,
                 ),
                 key=lambda item: item[1],
