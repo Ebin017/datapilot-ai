@@ -16,6 +16,7 @@ dependencies = [
     "scikit-learn" = ^1.9.0",
     "ollama = ^0.6.2",
     "matplotlib>=3.11.1",
+    "reportlab=5.0.0"
 ]
 
 [tool.setuptools.packages.find]

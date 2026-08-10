@@ -16,6 +16,7 @@ from models import BusinessInsightResult
 from models.data_cleaning_result import DataCleaningResult
 from models.eda_visualization import EDAVisualizationResult
 from models.cleaning_plan import CleaningPlan
+from models.report_result import ReportResult
 
 
 
@@ -54,5 +55,7 @@ class ProjectContext:
     data_cleaning_result: DataCleaningResult | None = None
 
     eda_visualization_result: EDAVisualizationResult | None = None
+
+    report_result: ReportResult | None = None
 
     
