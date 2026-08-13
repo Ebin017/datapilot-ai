@@ -39,6 +39,7 @@ class DatasetTool(BaseTool):
         # Initialize ProjectContext
         context = ProjectContext(
             dataframe=dataframe,
+            file_name=Path(dataset_path).name,
         )
 
         # Store ProjectContext

@@ -1,5 +1,3 @@
-from pathlib import Path
-
 from crewai.tools import BaseTool
 from pydantic import Field
 
@@ -17,24 +15,26 @@ class MetadataTool(BaseTool):
     name: str = "Metadata Extractor"
 
     description: str = (
-        "Extract metadata from the loaded dataset."
+        "Extract metadata from the dataset already loaded "
+        "in the shared ProjectContext. "
+        "IMPORTANT: This tool takes NO arguments. "
+        "Do not provide file_name or any other parameters. "
+        "The tool automatically uses the dataset and filename "
+        "stored in ProjectContext."
     )
 
     metadata_service: MetadataService = Field(
         default_factory=MetadataService,
     )
 
-    def _run(
-        self,
-        file_name: str,
-    ) -> str:
+    def _run(self) -> str:
 
         context = ProjectContextManager.get_context()
 
         context.dataset_info = (
             self.metadata_service.extract(
                 dataframe=context.dataframe,
-                file_name=Path(file_name).name,
+                file_name=context.file_name or "unknown",
             )
         )
 

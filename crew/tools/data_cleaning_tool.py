@@ -43,12 +43,43 @@ class DataCleaningTool(BaseTool):
 
         result = context.data_cleaning_result
 
+        missing_value_details = (
+            "\n".join(
+                f"- {column}: {count} missing values"
+                for column, count
+                in result.missing_values_filled.items()
+            )
+            if result.missing_values_filled
+            else "- None"
+        )
+
+        columns_removed = (
+            ", ".join(result.columns_removed)
+            if result.columns_removed
+            else "None"
+        )
+
+        cleaning_summary = (
+            "\n".join(
+                f"- {summary}"
+                for summary in result.cleaning_summary
+            )
+            if result.cleaning_summary
+            else "- No cleaning operations performed."
+        )
+
         return (
-            "Data cleaning completed successfully.\n"
+            "Data cleaning completed successfully.\n\n"
+
             f"Original Rows: {result.original_rows}\n"
             f"Final Rows: {result.final_rows}\n"
-            f"Duplicate Rows Removed: {result.duplicate_rows_removed}\n"
-            f"Columns Removed: {len(result.columns_removed)}\n"
-            f"Missing Value Columns Handled: "
-            f"{len(result.missing_values_filled)}"
+            f"Duplicate Rows Removed: "
+            f"{result.duplicate_rows_removed}\n"
+            f"Columns Removed: {columns_removed}\n\n"
+
+            "Missing Value Details:\n"
+            f"{missing_value_details}\n\n"
+
+            "Cleaning Summary:\n"
+            f"{cleaning_summary}"
         )

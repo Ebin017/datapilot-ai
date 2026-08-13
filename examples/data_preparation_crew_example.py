@@ -70,10 +70,10 @@ if __name__ == "__main__":
     result = crew.kickoff(
         inputs={
             "dataset_path": (
-                "datasets/employee_attrition.csv"
+                "datasets/cleaning1.csv"
             ),
             "file_name": (
-                "employee_attrition.csv"
+                "cleaning1.csv"
             ),
         }
     )

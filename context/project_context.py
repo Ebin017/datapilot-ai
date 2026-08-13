@@ -28,6 +28,8 @@ class ProjectContext:
 
     dataframe: pd.DataFrame
 
+    file_name: str | None = None
+
     dataset_info: DatasetInfo | None = None
 
     data_quality: DataQualityResult | None = None
