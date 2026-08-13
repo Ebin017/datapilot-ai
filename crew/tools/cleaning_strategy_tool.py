@@ -17,8 +17,12 @@ class CleaningStrategyTool(BaseTool):
     name: str = "Cleaning Strategy Generator"
 
     description: str = (
-        "Analyze the dataset and generate a recommended "
-        "data cleaning strategy."
+        "Generate the cleaning strategy for the dataset already "
+        "stored in the shared ProjectContext. "
+        "IMPORTANT: This tool takes NO arguments. "
+        "Do not provide dataset_columns, rows, missing values, "
+        "or any other parameters. "
+        "The tool automatically reads the shared ProjectContext."
     )
 
     cleaning_strategy_service: CleaningStrategyService = Field(

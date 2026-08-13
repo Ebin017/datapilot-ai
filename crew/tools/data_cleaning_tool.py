@@ -17,7 +17,13 @@ class DataCleaningTool(BaseTool):
     name: str = "Data Cleaning Tool"
 
     description: str = (
-        "Clean the loaded dataset using the generated cleaning plan."
+        "Execute the cleaning plan already stored in the shared "
+        "ProjectContext. "
+        "IMPORTANT: This tool takes NO arguments. "
+        "Do not provide strategy, columns_to_fillna, operations, "
+        "or any other parameters. "
+        "The tool automatically reads the cleaning plan from "
+        "the shared ProjectContext."
     )
 
     data_cleaning_service: DataCleaningService = Field(
