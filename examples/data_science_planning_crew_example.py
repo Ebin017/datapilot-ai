@@ -1,16 +1,8 @@
 from crewai import Crew
 
-from crew.agents.data_analyst_agent import (
-    create_data_analyst_agent,
-)
-
 from crew.agents.data_science_planning_agent import (
     create_data_science_planning_agent,
 )
-
-# --------------------------------
-# Data Preparation Tasks
-# --------------------------------
 
 from crew.tasks.dataset_initialization_task import (
     create_dataset_initialization_task,
@@ -28,10 +20,6 @@ from crew.tasks.data_cleaning_task import (
     create_data_cleaning_task,
 )
 
-# --------------------------------
-# Data Science Planning Tasks
-# --------------------------------
-
 from crew.tasks.dataset_understanding_task import (
     create_dataset_understanding_task,
 )
@@ -45,88 +33,91 @@ from crew.tasks.analysis_planning_task import (
 )
 
 
-def create_datapilot_crew():
+def create_test_crew():
 
-    # ========================================
-    # Agents
-    # ========================================
-
-    analyst = create_data_analyst_agent()
-
-    planning_agent = (
-        create_data_science_planning_agent()
-    )
-
-    # ========================================
-    # Data Preparation
-    # ========================================
+    agent = create_data_science_planning_agent()
 
     initialization_task = (
         create_dataset_initialization_task(
-            analyst,
+            agent,
         )
     )
 
     data_quality_task = (
         create_data_quality_task(
-            analyst,
+            agent,
         )
     )
 
     cleaning_strategy_task = (
         create_cleaning_strategy_task(
-            analyst,
+            agent,
         )
     )
 
     data_cleaning_task = (
         create_data_cleaning_task(
-            analyst,
+            agent,
         )
     )
 
-    # ========================================
-    # Data Science Planning
-    # ========================================
-
     understanding_task = (
         create_dataset_understanding_task(
-            planning_agent,
+            agent,
         )
     )
 
     target_task = (
         create_target_identification_task(
-            planning_agent,
+            agent,
         )
     )
 
-    analysis_planning_task = (
+    planning_task = (
         create_analysis_planning_task(
-            planning_agent,
+            agent,
         )
     )
-
-    # ========================================
-    # Crew
-    # ========================================
 
     return Crew(
-        agents=[
-            analyst,
-            planning_agent,
-        ],
+        agents=[agent],
 
         tasks=[
             initialization_task,
             data_quality_task,
             cleaning_strategy_task,
             data_cleaning_task,
-
             understanding_task,
             target_task,
-            analysis_planning_task,
+            planning_task,
         ],
 
         verbose=True,
     )
+
+
+if __name__ == "__main__":
+
+    crew = create_test_crew()
+
+    result = crew.kickoff(
+        inputs={
+            "dataset_path": (
+                "datasets/employee_attrition.csv"
+            ),
+        }
+    )
+
+    print(
+        "\n" + "=" * 60
+    )
+
+    print(
+        "DATA SCIENCE PLANNING CREW RESULT"
+    )
+
+    print(
+        "=" * 60
+    )
+
+    print(result)
