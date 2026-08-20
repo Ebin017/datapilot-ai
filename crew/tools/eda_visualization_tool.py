@@ -18,8 +18,16 @@ class EDAVisualizationTool(BaseTool):
     name: str = "EDA Visualization Tool"
 
     description: str = (
-        "Generate histograms, boxplots, count plots, "
-        "correlation heatmaps and target distribution charts."
+        "Generate exploratory data analysis visualizations "
+        "from the cleaned dataset using the AnalysisPlan stored "
+        "in the shared ProjectContext. The visualizations include "
+        "histograms, boxplots, categorical count plots, correlation "
+        "heatmaps, and target distribution charts. "
+        "IMPORTANT: This tool takes NO arguments. "
+        "Do not provide dataset, columns, target, project_context, "
+        "analysis_plan, or any other arguments. "
+        "The tool reads all required information directly from "
+        "the shared ProjectContext."
     )
 
     visualization_service: EDAVisualizationService = Field(
@@ -29,6 +37,12 @@ class EDAVisualizationTool(BaseTool):
     def _run(self) -> str:
 
         context = ProjectContextManager.get_context()
+
+        if context.analysis_plan is None:
+            raise ValueError(
+                "Analysis plan is missing from ProjectContext. "
+                "Run Analysis Planning before visualization."
+            )
 
         context.eda_visualization_result = (
             self.visualization_service.generate(

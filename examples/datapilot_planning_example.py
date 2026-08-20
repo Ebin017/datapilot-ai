@@ -36,6 +36,13 @@ from crew.tasks.analysis_planning_task import (
     create_analysis_planning_task,
 )
 
+from crew.tasks.eda_task import (
+    create_eda_task,
+)
+
+from crew.tasks.eda_visualization_task import (
+    create_eda_visualization_task,
+)
 
 def create_test_crew():
 
@@ -102,6 +109,22 @@ def create_test_crew():
     )
 
     # --------------------------------
+    # EDA
+    # --------------------------------
+
+    eda_task = (
+        create_eda_task(
+            planning_agent,
+        )
+    )
+
+    eda_visualization_task = (
+    create_eda_visualization_task(
+        planning_agent,
+    )
+)
+
+    # --------------------------------
     # Crew
     # --------------------------------
 
@@ -120,6 +143,9 @@ def create_test_crew():
             understanding_task,
             target_task,
             analysis_planning_task,
+
+            eda_task,
+            eda_visualization_task,
         ],
 
         verbose=True,
