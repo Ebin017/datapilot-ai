@@ -18,9 +18,17 @@ class FeatureEngineeringTool(BaseTool):
     name: str = "Feature Engineering Tool"
 
     description: str = (
-        "Prepare the dataset for machine learning by "
-        "encoding categorical variables, scaling numerical "
-        "features and separating features from the target."
+        "Prepare the cleaned dataset for machine learning using "
+        "the AnalysisPlan stored in the shared ProjectContext. "
+        "This includes encoding categorical variables, encoding "
+        "the target when required, scaling numerical features, "
+        "removing excluded columns, and separating features from "
+        "the target. "
+        "IMPORTANT: This tool takes NO arguments. "
+        "Do not provide dataset, columns, target, analysis_plan, "
+        "project_context, or any other arguments. "
+        "The tool reads all required information directly from "
+        "the shared ProjectContext."
     )
 
     feature_engineering_service: FeatureEngineeringService = Field(
@@ -30,6 +38,12 @@ class FeatureEngineeringTool(BaseTool):
     def _run(self) -> str:
 
         context = ProjectContextManager.get_context()
+
+        if context.analysis_plan is None:
+            raise ValueError(
+                "Analysis plan is missing from ProjectContext. "
+                "Run Analysis Planning before Feature Engineering."
+            )
 
         context.feature_engineering_result = (
             self.feature_engineering_service.transform(

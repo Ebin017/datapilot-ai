@@ -44,6 +44,10 @@ from crew.tasks.eda_visualization_task import (
     create_eda_visualization_task,
 )
 
+from crew.tasks.feature_engineering_task import (
+    create_feature_engineering_task,
+)
+
 def create_test_crew():
 
     # --------------------------------
@@ -119,10 +123,17 @@ def create_test_crew():
     )
 
     eda_visualization_task = (
-    create_eda_visualization_task(
-        planning_agent,
+        create_eda_visualization_task(
+            planning_agent,
+        )
     )
-)
+
+    # Feature Engineering
+    feature_engineering_task = (
+        create_feature_engineering_task(
+            planning_agent,
+        )
+    )
 
     # --------------------------------
     # Crew
@@ -146,6 +157,8 @@ def create_test_crew():
 
             eda_task,
             eda_visualization_task,
+
+            feature_engineering_task,
         ],
 
         verbose=True,
