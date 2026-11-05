@@ -11,7 +11,8 @@ from services.ai.base_ai_service import BaseAIService
 
 class AIAnalysisPlanner(BaseAIService):
     """
-    Uses Gemini to create an analysis plan.
+    Uses AI to create a machine learning analysis plan
+    and validates the generated feature lists.
     """
 
     def create_plan(
@@ -23,7 +24,27 @@ class AIAnalysisPlanner(BaseAIService):
             context,
         )
 
-        return self.generate_structured_output(
+        plan = self.generate_structured_output(
             prompt,
             AnalysisPlan,
         )
+
+        # --------------------------------------------------
+        # Validate target column to prevent data leakage
+        # --------------------------------------------------
+
+        target_column = plan.target_column
+
+        plan.numerical_features = [
+            column
+            for column in plan.numerical_features
+            if column != target_column
+        ]
+
+        plan.categorical_features = [
+            column
+            for column in plan.categorical_features
+            if column != target_column
+        ]
+
+        return plan

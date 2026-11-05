@@ -18,8 +18,15 @@ class ModelTrainingTool(BaseTool):
     name: str = "Model Training Tool"
 
     description: str = (
-        "Train candidate machine learning models and select "
-        "the best performing model."
+        "Train candidate machine learning models using the "
+        "AnalysisPlan and FeatureEngineeringResult stored in the "
+        "shared ProjectContext, evaluate their performance, and "
+        "select the best-performing model. "
+        "IMPORTANT: This tool takes NO arguments. "
+        "Do not provide dataset, features, target, analysis_plan, "
+        "project_context, model names, or any other arguments. "
+        "The tool reads all required information directly from "
+        "the shared ProjectContext."
     )
 
     training_service: ModelTrainingService = Field(
@@ -29,6 +36,19 @@ class ModelTrainingTool(BaseTool):
     def _run(self) -> str:
 
         context = ProjectContextManager.get_context()
+
+        if context.analysis_plan is None:
+            raise ValueError(
+                "Analysis plan is missing from ProjectContext. "
+                "Run Analysis Planning before Model Training."
+            )
+
+        if context.feature_engineering_result is None:
+            raise ValueError(
+                "Feature engineering result is missing from "
+                "ProjectContext. Run Feature Engineering before "
+                "Model Training."
+            )
 
         context.model_training_result = (
             self.training_service.train(

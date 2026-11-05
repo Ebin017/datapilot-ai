@@ -13,6 +13,8 @@ class ModelTrainingResult(BaseModel):
 
     evaluation_scores: dict[str, float]
 
+    evaluation_metric: str
+
     best_model_name: str
 
     best_model: Any
@@ -21,6 +23,6 @@ class ModelTrainingResult(BaseModel):
 
     x_train: Any
     x_test: Any
-    
+
     y_train: Any
     y_test: Any

@@ -11,18 +11,31 @@ def create_data_quality_task(agent) -> Task:
             "Analyze the dataset that has already been loaded "
             "into the shared ProjectContext.\n\n"
 
-            "First extract the dataset metadata using the "
-            "Metadata Extractor tool.\n\n"
+            "STEP 1: METADATA EXTRACTION\n"
+            "Use the Metadata Extractor tool first.\n"
+            "This tool takes NO arguments. It automatically retrieves "
+            "the DataFrame and filename from ProjectContext.\n\n"
 
-            "Then analyze the dataset for data quality issues "
-            "using the Data Quality Analyzer tool.\n\n"
+            "STEP 2: DATA QUALITY ANALYSIS\n"
+            "After metadata extraction, use the Data Quality Analyzer "
+            "tool.\n"
+            "This tool also takes NO arguments. It automatically "
+            "retrieves the DataFrame from ProjectContext.\n\n"
 
-            "Do not attempt to load the dataset again."
+            "IMPORTANT RULES:\n"
+            "- Do not pass arguments to either tool.\n"
+            "- Do not load the dataset again.\n"
+            "- Do not manually analyze the dataset.\n"
+            "- Do not write or suggest pandas code.\n"
+            "- Do not invent analysis results.\n"
+            "- If either tool fails, clearly report the failure.\n"
+            "- Only report results returned by the tools."
         ),
 
         expected_output=(
-            "The shared ProjectContext contains the dataset "
-            "metadata and completed data quality assessment."
+            "Dataset metadata has been extracted and data quality "
+            "analysis has been completed successfully. Both results "
+            "are stored in the shared ProjectContext."
         ),
 
         agent=agent,

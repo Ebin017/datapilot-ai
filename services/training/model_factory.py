@@ -1,5 +1,5 @@
-from sklearn.ensemble import RandomForestClassifier
-from sklearn.linear_model import LogisticRegression
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor
+from sklearn.linear_model import LogisticRegression, LinearRegression
 
 
 class ModelFactory:
@@ -8,20 +8,34 @@ class ModelFactory:
     """
 
     @staticmethod
-    def create(
-        model_name: str,
-    ):
+    def create(model_name: str):
 
-        if model_name == "logistic_regression":
-            return LogisticRegression(
-                max_iter=1000,
-            )
-
-        if model_name == "random_forest":
-            return RandomForestClassifier(
-                random_state=42,
-            )
-
-        raise ValueError(
-            f"Unsupported model: {model_name}"
+        model_name = (
+            model_name.strip()
+            .lower()
+            .replace(" ", "")
+            .replace("_", "")
         )
+
+        models = {
+            "logisticregression": LogisticRegression(
+                max_iter=1000,
+            ),
+            "randomforest": RandomForestClassifier(
+                random_state=42,
+            ),
+            "linearregression": LinearRegression(),
+            "randomforestregressor": RandomForestRegressor(
+                random_state=42,
+            ),
+            "randomforestregression": RandomForestRegressor(
+                random_state=42,
+            ),
+        }
+
+        if model_name not in models:
+            raise ValueError(
+                f"Unsupported model: {model_name}"
+            )
+
+        return models[model_name]

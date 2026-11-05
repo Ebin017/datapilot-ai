@@ -99,16 +99,23 @@ class ModelTrainingService:
                 "No supported models were trained."
             )
 
-        best_model_name = max(
-            evaluation_scores,
-            key=evaluation_scores.get,
-        )
+        if MetricFactory.is_higher_better(plan.evaluation_metric):
+            best_model_name = max(
+                evaluation_scores,
+                key=evaluation_scores.get,
+            )
+        else:
+            best_model_name = min(
+                evaluation_scores,
+                key=evaluation_scores.get,
+            )
 
         best_model =  trained_models[best_model_name]
 
         return ModelTrainingResult(
             trained_models=trained_models,
             evaluation_scores=evaluation_scores,
+            evaluation_metric=plan.evaluation_metric,
             best_model_name=best_model_name,
             best_score=evaluation_scores[best_model_name],
             best_model=best_model,

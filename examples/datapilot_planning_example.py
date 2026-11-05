@@ -48,6 +48,10 @@ from crew.tasks.feature_engineering_task import (
     create_feature_engineering_task,
 )
 
+from crew.tasks.model_training_task import (
+    create_model_training_task,
+)
+
 def create_test_crew():
 
     # --------------------------------
@@ -135,6 +139,13 @@ def create_test_crew():
         )
     )
 
+    # Model Training
+    model_training_task = (
+        create_model_training_task(
+            planning_agent,
+        )
+    )
+
     # --------------------------------
     # Crew
     # --------------------------------
@@ -159,6 +170,7 @@ def create_test_crew():
             eda_visualization_task,
 
             feature_engineering_task,
+            model_training_task,
         ],
 
         verbose=True,
